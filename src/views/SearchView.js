@@ -1,12 +1,12 @@
 var App = App || {};
 
-App.views.HomeView = Backbone.View.extend({
-  el: '#root',
+App.views.SearchView = Backbone.View.extend({
+	el: '#search',
 
-  events: {
+	events: {
   },
-  template: Handlebars.compile($('#home--template').html()),
-  
+  template: Handlebars.compile($('#searchform--template').html()),
+
   initialize: function() {
     _.bindAll(this, 'render');
     this.render();
@@ -14,8 +14,7 @@ App.views.HomeView = Backbone.View.extend({
 
   render: function() {
     this.$el.append(this.template());
-    this.searchView = new App.views.SearchView();
   	return this;
   },
 
-});
+})
