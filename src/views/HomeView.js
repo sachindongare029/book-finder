@@ -7,6 +7,7 @@ App.views.HomeView = Backbone.View.extend({
   },
   template: Handlebars.compile($('#home--template').html()),
   initialize: function() {
+    console.log("homeView");
     _.bindAll(this, 'render');
     this.render();
   },

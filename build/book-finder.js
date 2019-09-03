@@ -19584,6 +19584,7 @@ App.views.HomeView = Backbone.View.extend({
   },
   template: Handlebars.compile($('#home--template').html()),
   initialize: function() {
+    console.log("homeView");
     _.bindAll(this, 'render');
     this.render();
   },
@@ -19599,16 +19600,11 @@ App.views.HomeView = Backbone.View.extend({
 App.Router = Backbone.Router.extend({
 
 	routes: {
-		'/': 'homeView', // #/
-    '*actions': 'pageNotFound',  // #/xyz
+		'': 'homeView'
   },
 
 	initialize: function(options) {
 	},
-
-  pageNotFound: function() {
-    new App.views.PageNotFound();
-  },
 
   homeView: function() {
     new App.views.HomeView();
