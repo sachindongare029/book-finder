@@ -3,7 +3,7 @@ var App = App || {};
 App.Router = Backbone.Router.extend({
 
 	routes: {
-		'/': 'homeView', // #/
+		'': 'homeView', // #/
   },
 
 	initialize: function(options) {

@@ -15,7 +15,7 @@
       <h4>Book Finder</h4>
     </header>
     <div id="root" class="container"></div>
-    <script  id="home--template" type="text/x-handlebars-template">
+    <script id="home--template" type="text/x-handlebars-template">
       <div id="home">
         <div id="search"></div>
         <div id="info"></div>
@@ -23,10 +23,18 @@
         <div id="pagination" class="pagination-sm"></div>
       </div>
     </script>
+    <script id="searchform--template" type="text/x-handlebars-template">
+      <div class="search-books">
+        <form class="search-books__form">
+          <input type="text" class="form-control" placeholder="enter book name" />
+          <button class="btn btn-primary">submit</button>
+        </form>
+      </div>
+    </script>
 
     <footer class="text-center">&copy; 2019</footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="build/book-search.js"></script>
+    <script src="build/book-finder.js"></script>
   </body>
 </html>

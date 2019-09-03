@@ -19,6 +19,8 @@ module.exports = function(grunt) {
           'node_modules/backbone/backbone.js',
           'node_modules/handlebars/dist/handlebars.js',
           'src/index.js',
+          'src/models/*.js',
+          'src/collections/*.js',
           'src/views/*.js',
           'src/routes.js',
           'src/app.js'

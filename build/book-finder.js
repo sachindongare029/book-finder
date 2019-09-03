@@ -19247,21 +19247,44 @@ App.views.HomeView = Backbone.View.extend({
   },
   template: Handlebars.compile($('#home--template').html()),
   initialize: function() {
+    console.log("inside home view");
     _.bindAll(this, 'render');
     this.render();
   },
 
   render: function() {
     this.$el.append(this.template());
+    // this.searchView = new App.views.SearchView();
   	return this;
   },
 
 });;var App = App || {};
 
+App.views.SearchView = Backbone.View.extend({
+	el: '#search',
+
+	events: {
+  },
+
+  template: Handlebars.compile($('#searchform--template').html()),
+
+  initialize: function() {
+  	console.log("in the search view");
+  	_.bindAll(this, 'render');
+  	this.render();
+  },
+
+  render: function() {
+  	this.$el.append(this.template({}));
+  	return this;
+  },
+
+});var App = App || {};
+
 App.Router = Backbone.Router.extend({
 
 	routes: {
-		'/': 'homeView', // #/
+		'': 'homeView', // #/
   },
 
 	initialize: function(options) {
