@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "book",
-    "search"
-  ],
-  "author": "Sachin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sachindongare029/book-finder.git"
+  },
+  "author": "sachin",
   "license": "MIT",
   "dependencies": {
     "backbone": "^1.4.0",
@@ -29,5 +29,9 @@
     "grunt-contrib-qunit": "^3.1.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/sachindongare029/book-finder/issues"
+  },
+  "homepage": "https://github.com/sachindongare029/book-finder#readme"
 }
