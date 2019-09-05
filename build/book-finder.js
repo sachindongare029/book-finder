@@ -19693,6 +19693,7 @@ App.views.ResultsView = Backbone.View.extend({
 
   render: function() {
     // Pass collections data using loop to another view
+    this.$el.empty();
     this.filters = App.helpers.getFilters();
 
     this.collection.each(function(item){
