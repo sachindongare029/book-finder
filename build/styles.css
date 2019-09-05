@@ -10037,6 +10037,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 header, footer {
+	padding: 5px 0;
 	background-color: #f9f8fa;
 }
 h4 {
@@ -10044,7 +10045,7 @@ h4 {
 	padding: 10px;
 }
 .search-books {
-  padding: 50px;
+  padding: 5em 50px;
   display: flex;
   justify-content: center;
 }

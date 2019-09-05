@@ -19711,9 +19711,7 @@ App.views.ResultsView = Backbone.View.extend({
     return this;
   },
 
-});
-
-;var App = App || {};
+});;var App = App || {};
 
 App.views.SearchView = Backbone.View.extend({
 	el: '#search',
@@ -19737,10 +19735,12 @@ App.views.SearchView = Backbone.View.extend({
   onSearch: function(e) {
     e.preventDefault();
     var $searchform__searchText = this.$('#form__searchText');
-    App.helpers.setFilters({
-      q: $searchform__searchText.val()
-    });
-    App.eventBus.trigger('QUERY_UPDATE');
+    if($searchform__searchText.val()) {
+      App.helpers.setFilters({
+        q: $searchform__searchText.val()
+      });
+      App.eventBus.trigger('QUERY_UPDATE');
+    }
   }
 });var App = App || {};
 

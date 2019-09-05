@@ -53,4 +53,3 @@ App.views.ResultsView = Backbone.View.extend({
   },
 
 });
-
