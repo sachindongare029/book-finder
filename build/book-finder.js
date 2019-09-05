@@ -19577,6 +19577,44 @@ var App = {
 };
 ;var App = App || {};
 
+App.helpers = {
+	setFilters: function (newFilters) {
+		var oldFilters = this.getFilters();
+		var finalFilters = _.extend({}, oldFilters, newFilters);
+		localStorage.setItem('filters', JSON.stringify(finalFilters));
+	},
+	getFilters: function() {
+		var filters = localStorage.getItem('filters');
+		if(!filters) {
+			return {};
+		}
+		filters = JSON.parse(filters);
+		return filters;
+	}
+};var App = App || {}
+
+var base_url = 'https://www.googleapis.com/books/v1/volumes';
+
+App.collections.Results = Backbone.Collection.extend({
+  initialize: function () {
+    _.bindAll(this, 'url', 'parse');
+  },
+  url: function () {
+  	return base_url;
+  },
+	parse: function(response) {
+    if(!response) {
+      return;
+    }
+    this.meta = {
+      totalItems: response.totalItems,
+      items: response.items
+    };
+	  return response.items;
+  }
+
+});;var App = App || {};
+
 App.views.HomeView = Backbone.View.extend({
   el: '#root',
 
@@ -19592,29 +19630,96 @@ App.views.HomeView = Backbone.View.extend({
   render: function() {
     this.$el.append(this.template());
     this.searchView = new App.views.SearchView();
+    this.resultsView = new App.views.ResultsView();
   	return this;
   },
 
 });
 ;var App = App || {};
 
+App.views.ResultsView = Backbone.View.extend({
+  el: '#book-list',
+
+  events: {
+  },
+
+  initialize: function() {
+    _.bindAll(this, 'render');
+    this.collection = new  App.collections.Results();
+    //set filters initially
+    App.helpers.setFilters({
+      q: '',
+      page: 1
+    });
+
+    //subscribe event
+    App.eventBus.on('QUERY_UPDATE', (function(params) {
+      this.fetchData(params);
+    }).bind(this));
+
+    //trigger event if we want data initially
+    this.listenTo(this.collection, 'sync', this.render);
+
+  },
+
+  fetchData: function (params) {
+    this.filters = App.helpers.getFilters();
+    this.collection.fetch({
+      data: this.filters,
+    });
+  },
+
+  render: function() {
+    // Pass collections data using loop to another view
+    this.filters = App.helpers.getFilters();
+
+    this.collection.each(function(item){
+      var result = item.toJSON();
+      console.log("result", result);
+      var volumeInfo = result.volumeInfo;
+      var imgLink = volumeInfo.imageLinks;
+    //   var bookItem = new App.views.BookItemView({
+    //     title: volumeInfo.title,
+    //     imageLinks: imgLink.thumbnail,
+    //     description: volumeInfo.description,
+    //     infoLink: volumeInfo.infoLink
+    //   });
+    //   this.$el.append(bookItem.render().el);
+    }, this);
+    return this;
+  },
+
+});
+
+;var App = App || {};
+
 App.views.SearchView = Backbone.View.extend({
 	el: '#search',
 
 	events: {
+		'click .form__searchBtn': 'onSearch'
   },
-  template: Handlebars.compile($('#searchform--template').html()),
 
   initialize: function() {
-    _.bindAll(this, 'render');
+    _.bindAll(this, 'render','onSearch');
     this.render();
   },
 
+  template: Handlebars.compile($('#searchform--template').html()),
+
   render: function() {
-    this.$el.append(this.template());
+    this.$el.append(this.template({}));
   	return this;
   },
 
+  onSearch: function(e) {
+    e.preventDefault();
+    var $searchform__searchText = this.$('#form__searchText');
+    App.helpers.setFilters({
+      q: $searchform__searchText.val()
+    });
+    App.eventBus.trigger('QUERY_UPDATE');
+  }
 });var App = App || {};
 
 App.Router = Backbone.Router.extend({

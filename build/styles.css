@@ -10040,6 +10040,10 @@ h4 {
 	text-align: left;
 	padding: 10px;
 }
+header, footer {
+	background-color: #f9f8fa;
+}
+
 .search-books {
   padding: 50px;
   display: flex;

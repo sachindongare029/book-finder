@@ -15,6 +15,7 @@ App.views.HomeView = Backbone.View.extend({
   render: function() {
     this.$el.append(this.template());
     this.searchView = new App.views.SearchView();
+    this.resultsView = new App.views.ResultsView();
   	return this;
   },
 
