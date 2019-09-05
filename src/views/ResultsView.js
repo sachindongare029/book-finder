@@ -15,6 +15,8 @@ App.views.ResultsView = Backbone.View.extend({
       page: 1
     });
 
+    this.dataInfo = new App.views.DataInformationView();
+
     //subscribe event
     App.eventBus.on('QUERY_UPDATE', (function(params) {
       this.fetchData(params);
@@ -36,6 +38,15 @@ App.views.ResultsView = Backbone.View.extend({
     // Pass collections data using loop to another view
     this.$el.empty();
     this.filters = App.helpers.getFilters();
+
+    if(this.collection.meta) {
+      var meta = this.collection.meta;
+    }
+    var totalItems = meta.totalItems;
+    this.dataInfo.render({
+      totalItems: totalItems,
+      q: this.filters.q
+    });
 
     this.collection.each(function(item){
       var result = item.toJSON();

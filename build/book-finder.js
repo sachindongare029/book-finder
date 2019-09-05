@@ -19637,6 +19637,27 @@ App.views.BookItemView = Backbone.View.extend({
 
 });var App = App || {};
 
+App.views.DataInformationView = Backbone.View.extend({
+  el: '#info',
+
+  initialize: function() {
+    _.bindAll(this, 'render');
+  },
+
+  template: Handlebars.compile($('#dataInfo--template').html()),
+
+  render: function(args) {
+    this.$el.empty();
+    this.$el.append(this.template({
+      q: args.q,
+      totalItems: args.totalItems
+    }));
+  	return this;
+  },
+
+});
+;var App = App || {};
+
 App.views.HomeView = Backbone.View.extend({
   el: '#root',
 
@@ -19674,6 +19695,8 @@ App.views.ResultsView = Backbone.View.extend({
       page: 1
     });
 
+    this.dataInfo = new App.views.DataInformationView();
+
     //subscribe event
     App.eventBus.on('QUERY_UPDATE', (function(params) {
       this.fetchData(params);
@@ -19695,6 +19718,15 @@ App.views.ResultsView = Backbone.View.extend({
     // Pass collections data using loop to another view
     this.$el.empty();
     this.filters = App.helpers.getFilters();
+
+    if(this.collection.meta) {
+      var meta = this.collection.meta;
+    }
+    var totalItems = meta.totalItems;
+    this.dataInfo.render({
+      totalItems: totalItems,
+      q: this.filters.q
+    });
 
     this.collection.each(function(item){
       var result = item.toJSON();
